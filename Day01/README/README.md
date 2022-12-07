@@ -39,4 +39,4 @@
         - If we use '<filename>' it will add that specific file only.
     - Git Status command shows the working tree status.
     - Git Commit command records changes to the repository.
-    - Git Log command shows commit logs.
+    - 
