@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define handle_error_en(en, msg) \
-                do{ errno = en; perror(msg); exit(EXIT_FAILURE);} while(0)
-
 void *sum_of_int(void *);
 
 int main()
@@ -21,20 +18,35 @@ int main()
 
     s = pthread_create(&thread_01, NULL, sum_of_int, (void *)&num);
 
-    if (s != 0) { // error handling for pthread_create
-        handle_error_en(s, "pthread_create");
+    /*  
+    Error handling for pthread_create
+    - On success, pthread_create() returns 0; 
+      on error, it returns an error number, and the contents of *thread are undefined.
+    */
+
+    if (s != 0) {
+        perror("pthread_create");
+        exit(EXIT_FAILURE);
     }
 
     /* if don't want to pass arguments from pthread_create() to thread use this -
         pthread_create(&thread_01, NULL, sum_of_int, NULL);
         if (s != 0) {
-        handle_error_en(s, "pthread_create");
+        perror("pthread_create");
+        exit(EXIT_FAILURE);
         }
     */
 
     s = pthread_join(thread_01, NULL);
-    if (s != 0) { // error handling for pthread_join
-        handle_error_en(s, "pthread_join");
+
+    /*
+    Error handling for pthread_join
+    - On success, pthread_join() returns 0; on error, it returns an error number.
+    */
+
+    if (s != 0) {
+        perror("pthread_join");
+        exit(EXIT_FAILURE);
     }
 
     return 0;
