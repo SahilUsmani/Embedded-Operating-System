@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define handle_error_en(en, msg) \
-                do{ errno = en; perror(msg); exit(EXIT_FAILURE);} while(0)
-
 void *swap(void *data);
 
 typedef struct inputs {  // using typdef
@@ -32,13 +29,26 @@ int main()
     printf("The 2nd number is :: %d\n", arg.var2);
 
     s = pthread_create(&thread_01, NULL, swap, (void *)&arg);
-    if (s != 0) { // error handling for pthread_create
-        handle_error_en(s, "pthread_create");
+
+    /*  
+    Error handling for pthread_create
+    - On success, pthread_create() returns 0; 
+      on error, it returns an error number, and the contents of *thread are undefined.
+    */
+    if (s != 0) {
+        perror("pthread_create");
+        exit(EXIT_FAILURE);
     }
 
     s = pthread_join(thread_01, NULL);
-    if (s != 0) { // error handling for pthread_join
-        handle_error_en(s, "pthread_join");
+
+    /*
+    Error handling for pthread_join
+    - On success, pthread_join() returns 0; on error, it returns an error number.
+    */
+    if (s != 0) { 
+       perror("pthread_join");
+       exit(EXIT_FAILURE);
     }
 
     // checking the swap functionality outside of thread
