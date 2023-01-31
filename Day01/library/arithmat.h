@@ -1,7 +1,7 @@
 /****************************************************************************************
 
 Author Name - Hiya Pandey
-Department - PG-DESD
+Department - PG-DESD Student
 
 *****************************************************************************************/
 
@@ -19,9 +19,9 @@ int mod(int,int);
 /*****************************************************************************************
 
 Function Name - sqr
-Parameter 01 - Integer type
+Parameter - Integer type
 Return Type - Integer
-Desciption - This function takes one argument and performs square operation on them. 
+Desciption - This function takes one argument and performs square operation on it. 
 
 ******************************************************************************************/
 int sqr(int);
